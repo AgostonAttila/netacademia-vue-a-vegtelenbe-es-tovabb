@@ -8,28 +8,13 @@ import VueRouter from "vue-router";
 import App from "./App.vue";
 import router from "./router";
 
+import store from "./store";
+
 // init
 Vue.use(VueRouter);
 new Vue({
   el: "#app",
   router,
-  data() {
-    return {
-      user: {
-        kind: "",
-        idToken: "",
-        email: "",
-        refreshToken: "",
-        expiresIn: "",
-        localId: ""
-      }
-    };
-  },
-  methods: {
-    setUserMutation(userPayload) {
-      console.log("userMutation: ", userPayload);
-      this.user = Object.assign({}, userPayload);
-    }
-  },
+  store,
   render: h => h(App)
 });
