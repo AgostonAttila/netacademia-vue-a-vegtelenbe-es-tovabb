@@ -13,6 +13,16 @@ import login from "./pages/login.vue";
 import registration from "./pages/registration.vue";
 import profile from "./pages/profile.vue";
 
+import store, { TYPES } from "./store";
+
+function Authenticated(to, from, next) {
+  if (store.getters.isLoggedIn) {
+    next();
+  } else {
+    next({ name: "login" });
+  }
+}
+
 // router
 export default new VueRouter({
   mode: "history",
@@ -25,17 +35,20 @@ export default new VueRouter({
     {
       name: "blog",
       path: "/blog",
-      component: blog
+      component: blog,
+      beforeEnter: Authenticated
     },
     {
       name: "blogCategory",
       path: "/blog/category/:categoryName",
-      component: blog
+      component: blog,
+      beforeEnter: Authenticated
     },
     {
       name: "blogPost",
       path: "/post/:postID",
-      component: post
+      component: post,
+      beforeEnter: Authenticated
     },
     {
       name: "contact",
@@ -45,12 +58,14 @@ export default new VueRouter({
     {
       name: "survey",
       path: "/survey",
-      component: survey
+      component: survey,
+      beforeEnter: Authenticated
     },
     {
       name: "statistics",
       path: "/statistics",
-      component: statistics
+      component: statistics,
+      beforeEnter: Authenticated
     },
     {
       name: "login",
@@ -63,8 +78,8 @@ export default new VueRouter({
       component: registration
     },
     {
-      name: "profil",
-      path: "/profil",
+      name: "profile",
+      path: "/profile",
       component: profile
     }
   ]
